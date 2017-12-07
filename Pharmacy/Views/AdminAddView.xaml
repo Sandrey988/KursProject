@@ -1,0 +1,143 @@
+﻿<UserControl x:Class="Pharmacy.Views.AdminAddView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Pharmacy.Views"
+             mc:Ignorable="d" 
+              MinHeight="600" MinWidth="800">
+    <Grid DataContext="{StaticResource MainViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="0" Width="200" Text="{Binding Search.AdminAddDrug.NotifyMessage, Mode=TwoWay}" 
+                 BorderBrush="Red" IsReadOnly="True"  Visibility="{Binding Search.AdminAddDrug.Notification}" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>            
+            
+            <TabControl Grid.Column="1">
+                <TabItem>
+                    <TabItem.Header>
+                        <Image Source="/Icons/admin_add.png" Width="32" Height="32"/>
+                    </TabItem.Header>
+                    <StackPanel>
+                        <RichTextBox Visibility="{Binding Search.AdminAddDrug.ErrorVisibility}" IsReadOnly="True">
+                            <FlowDocument>
+                                <Paragraph>
+                                    <Run Text="{Binding Search.AdminAddDrug.ErrorsAdd}" Foreground="Red" FontWeight="Bold"/>
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                        <Label Content="Название препарата"/>
+                        <ComboBox Style="{StaticResource ComboBoxFlatStyle}"
+                                  ItemsSource="{Binding Medications}"
+                                  DisplayMemberPath="Name"
+                                  Text="{Binding Search.AdminAddDrug.AddName}"/>
+                        <Label Content="Дата производства"/>
+                        <TextBox Text="{Binding Search.AdminAddDrug.AddStartDate}"/>
+                        <Label Content="Дата утилизации"/>
+                        <TextBox Text="{Binding Search.AdminAddDrug.AddEndDate}"/>
+                        <Label Content="Стоимость"/>
+                        <TextBox Text="{Binding Search.AdminAddDrug.AddCost}"/>
+                        <Label Content="Производитель"/>
+                        <ComboBox Style="{StaticResource ComboBoxFlatStyle}"
+                                      ItemsSource="{Binding Producers}"
+                                      DisplayMemberPath="FirmName"
+                                      Text="{Binding Search.AdminAddDrug.AddProducer}"/>
+                        <Label Content="Количество"/>
+                        <TextBox Text="{Binding Search.AdminAddDrug.AddCount}"/>
+                        <Label Content="Скидка"/>
+                        <TextBox Text="{Binding Search.AdminAddDrug.AddDiscount}"/>
+                        <Button Template="{StaticResource ButtonTemplate}" 
+                                Command="{Binding Search.AdminAddDrug.Add}"
+                                Content="Добавить" Height="30" Margin="5"/>
+                    </StackPanel>
+                </TabItem>
+
+                <TabItem>
+                    <TabItem.Header>
+                        <Image Source="/Icons/admin_edit.png" Width="32" Height="32"/>
+                    </TabItem.Header>
+                    <StackPanel CanVerticallyScroll="True">
+                        <RichTextBox  Visibility="{Binding Search.AdminAddDrug.ErrorEditVisibility}" IsReadOnly="True">
+                            <FlowDocument>
+                                <Paragraph>
+                                    <Run Text="{Binding Search.AdminAddDrug.ErrorsEdit}" Foreground="Red" FontWeight="Bold"/>
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                        <Label Content="Название препарата"/>
+                        <ComboBox Style="{StaticResource ComboBoxFlatStyle}" 
+                                      ItemsSource="{Binding Medications}"
+                                      DisplayMemberPath="Name"
+                                      Text="{Binding Search.AdminAddDrug.EditName}"/>
+                        <Label Content="Дата производства"/>
+                        <TextBox Text="{Binding Search.AdminAddDrug.EditStartDate}"/>
+                        <Label Content="Дата утилизации"/>
+                        <TextBox Text="{Binding Search.AdminAddDrug.EditEndDate}"/>
+                        <Label Content="Стоимость"/>
+                        <TextBox Text="{Binding Search.AdminAddDrug.EditCost}"/>
+                        <Label Content="Производитель"/>
+                        <ComboBox Style="{StaticResource ComboBoxFlatStyle}"
+                                    ItemsSource="{Binding Producers}"
+                                    DisplayMemberPath="FirmName"
+                                    Text="{Binding Search.AdminAddDrug.EditProducer}"/>
+                        <Label Content="Количество"/>
+                        <TextBox Text="{Binding Search.AdminAddDrug.EditCount}"/>
+                        <Label Content="Скидка"/>
+                        <TextBox Text="{Binding Search.AdminAddDrug.EditDiscount}"/>
+                        <Button Template="{StaticResource ButtonTemplate}"
+                                Command="{Binding Search.AdminAddDrug.Edit}"
+                                Content="{Binding Search.AdminAddDrug.EditButton}" 
+                                Height="30" Margin="5" />
+                        <Button Template="{StaticResource ButtonTemplate}" 
+                                Visibility="{Binding Search.AdminAddDrug.CancelButton}" 
+                                Command="{Binding Search.AdminAddDrug.Cancel}"
+                                Content="Отмена" Height="30" Margin="5" />
+                        <Button Template="{StaticResource ButtonTemplate}" 
+                                Command="{Binding Search.AdminAddDrug.Delete}"
+                                Content="Удалить" Height="30" Margin="5" />
+                    </StackPanel>
+                </TabItem>
+
+                <TabItem>
+                    <TabItem.Header>
+                        <Image Source="/Icons/admin_search.png" Width="32" Height="32"/>
+                    </TabItem.Header>
+                    <StackPanel>
+                        <Label Content="Название препарата"/>
+                        <TextBox Text="{Binding Search.AdminAddDrug.SearchName}"/>
+                        <Label Content="Дата производства"/>
+                        <TextBox Text="{Binding Search.AdminAddDrug.SearchStartDate}"/>
+                        <Label Content="Дата утилизации"/>
+                        <TextBox Text="{Binding Search.AdminAddDrug.SearchEndDate}"/>
+                        <Label Content="Стоимость"/>
+                        <TextBox Text="{Binding Search.AdminAddDrug.SearchCost}"/>
+                        <Label Content="Производитель"/>
+                        <TextBox  Text="{Binding Search.AdminAddDrug.SearchProducer}"/>
+                        <Button Template="{StaticResource ButtonTemplate}" 
+                                Command="{Binding Search.AdminAddDrug.Search}"
+                                Content="Найти" Height="30" Margin="5" 
+                                FontFamily="Console"/>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+
+            <DataGrid  Grid.Column="0" ItemsSource="{Binding Search.AdminAddDrug.Drugs_}" SelectedItem="{Binding Search.AdminAddDrug.selectedItem}" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название"  Width="*" Binding="{Binding Medications.Name}" FontSize="13"/>
+                    <DataGridTextColumn Header="Дата производства"  Width="*" Binding="{Binding ManufactureDate}" FontSize="15"/>
+                    <DataGridTextColumn Header="Дата утилизации"  Width="*" Binding="{Binding DisposeDate}" FontSize="13"/>
+                    <DataGridTextColumn Header="Стоимость"  Width="0.5*" Binding="{Binding Cost, StringFormat={}{0} руб.}" FontSize="13"/>
+                    <DataGridTextColumn Header="Количество"  Width="0.5*" Binding="{Binding Count, StringFormat={}{0} шт.}" FontSize="13"/>
+                    <DataGridTextColumn Header="Скидка"  Width="0.5*" Binding="{Binding Discount.Discount1, StringFormat={}{0} %}" FontSize="13" />
+                    <DataGridTextColumn Header="Производитель"  Width="*" Binding="{Binding Producers.FirmName}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>

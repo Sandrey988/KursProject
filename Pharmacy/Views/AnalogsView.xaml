@@ -1,0 +1,115 @@
+﻿<UserControl x:Class="Pharmacy.Views.AnalogsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Pharmacy.Views"
+             mc:Ignorable="d" 
+              MinHeight="600" MinWidth="800">
+    <Grid>
+        <Grid DataContext="{StaticResource MainViewModel}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="250"/>
+                </Grid.ColumnDefinitions>
+                <TabControl Grid.Column="1">
+                    <TabItem>
+                        <TabItem.Header>
+                            <Image Source="/Icons/admin_add.png" Width="32" Height="32"/>
+                        </TabItem.Header>
+                        <StackPanel>
+                            <RichTextBox Visibility="{Binding AnalogsViewModel.ErrorVisibility}" IsReadOnly="True">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Run Text="{Binding AnalogsViewModel.ErrorsAdd}" Foreground="Red" FontWeight="Bold"/>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <Label Content="Название препарата"/>
+                            <ComboBox Style="{StaticResource ComboBoxFlatStyle}" 
+                                      ItemsSource="{Binding Medications}"
+                                      DisplayMemberPath="Name"
+                                      Text="{Binding AnalogsViewModel.AddDrugName}"/>
+                            <Label Content="Название аналога"/>
+                            <ComboBox Style="{StaticResource ComboBoxFlatStyle}" 
+                                      ItemsSource="{Binding Medications}"
+                                      DisplayMemberPath="Name"
+                                      Text="{Binding AnalogsViewModel.AddDrugAnalogName}"/>
+                            <Button Template="{StaticResource ButtonTemplate}" 
+                                    Content="Добавить" 
+                                    Height="30" 
+                                    Margin="5" 
+                                    Command="{Binding AnalogsViewModel.Add}"
+                                    FontFamily="Console"/>
+                        </StackPanel>
+                    </TabItem>
+
+                    <TabItem>
+                        <TabItem.Header>
+                            <Image Source="/Icons/admin_edit.png" Width="32" Height="32"/>
+                        </TabItem.Header>
+                        <StackPanel>
+                            <RichTextBox Visibility="{Binding AnalogsViewModel.ErrorEditVisibility}" IsReadOnly="True">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Run Text="{Binding AnalogsViewModel.ErrorsEdit}" Foreground="Red" FontWeight="Bold"/>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <Label Content="Название препарата"/>
+                                <ComboBox Style="{StaticResource ComboBoxFlatStyle}" 
+                                      ItemsSource="{Binding Medications}"
+                                      DisplayMemberPath="Name"
+                                      Text="{Binding AnalogsViewModel.ChangeDrugName}"/>
+                            <Label Content="Название аналога"/>
+                            <ComboBox Style="{StaticResource ComboBoxFlatStyle}" 
+                                      ItemsSource="{Binding Medications}"
+                                      DisplayMemberPath="Name"
+                                      Text="{Binding AnalogsViewModel.ChangeDrugAnalogName}"/>
+
+                            <Button Template="{StaticResource ButtonTemplate}" 
+                                    Content="Удалить" 
+                                    Command="{Binding AnalogsViewModel.Remove}"
+                                    Height="30" Margin="5" 
+                                    FontFamily="Console" />
+
+
+                        </StackPanel>
+                    </TabItem>
+
+                    <TabItem>
+                        <TabItem.Header>
+                            <Image Source="/Icons/admin_search.png" Width="32" Height="32"/>
+                        </TabItem.Header>
+                        <StackPanel>
+                            <Label Content="Название препарата"/>
+                            <TextBox Text="{Binding AnalogsViewModel.SearchDrugName}"/>
+                            <Label Content="Название аналога"/>
+                            <TextBox Text="{Binding AnalogsViewModel.SearchDrugAnalogName}"/>
+                            <Button Template="{StaticResource ButtonTemplate}" 
+                                    Command="{Binding AnalogsViewModel.Search}"
+                                    Content="Найти" Height="30" 
+                                    Margin="5" FontFamily="Segoe UI Light" FontSize="15" />
+                        </StackPanel>
+                    </TabItem>
+
+                </TabControl>
+
+
+
+                <DataGrid  Grid.Column="0" ItemsSource="{Binding AnalogsViewModel.Analogs_}" SelectedItem="{Binding AnalogsViewModel.SelectedAnalog}" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Название препарата" Width="*" Binding="{Binding DrugName}" FontSize="15" />
+                        <DataGridTextColumn Header="Назание аналога" Width="*" Binding="{Binding AnalogName}" FontSize="15" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

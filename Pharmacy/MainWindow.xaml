@@ -1,0 +1,23 @@
+﻿<Window x:Class="Pharmacy.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pharmacy"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="900" x:Name="MainWidow">
+    <Grid>
+        <Rectangle Panel.ZIndex="5" Stroke="#FF51DEDE" Margin="0" Width="104" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
+        <Image Source="Icons/search.png" Panel.ZIndex="5" HorizontalAlignment="Left" VerticalAlignment="Top" Height="37" Width="40" Margin="10,10" PreviewMouseLeftButtonDown="Search_PreviewMouseLeftButtonDown"/>
+        <Image Source="Icons/admin.png" Panel.ZIndex="5" HorizontalAlignment="Left" VerticalAlignment="Top" Width="37" Height="40" Margin="57,10" PreviewMouseLeftButtonDown="Admin_PreviewMouseLeftButtonDown"/>
+        <Grid Margin="104,0,0,0" Width="150" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Rectangle Width="150" Height="60" Stroke="#FF51DEDE" Visibility="{Binding myVisibility}"/>
+            <Image Margin="10"  Width="40" Height="40" VerticalAlignment="Top" Visibility="{Binding myVisibility}" HorizontalAlignment="Left" Source="Icons/add_drugs.png" PreviewMouseLeftButtonDown="Admin_add_PreviewMouseLeftButtonDown"/>
+            <Image Margin="30,35,0,0" Width="16" Height="16" VerticalAlignment="Top" Visibility="{Binding myVisibility}" HorizontalAlignment="Left" Source="Icons/add_drugs_.png" PreviewMouseLeftButtonDown="Admin_add_PreviewMouseLeftButtonDown"/>
+            <Image Margin="50,3,0,0" Height="50" Width="50" Source="/Icons/Medicines.png" Visibility="{Binding myVisibility}"  HorizontalAlignment="Left" VerticalAlignment="Top" PreviewMouseLeftButtonDown="Admin_PreviewMouseLeftButtonDown"/>
+            <Image Margin="100,10,0,0"  Width="40" Height="40" VerticalAlignment="Top" Visibility="{Binding myVisibility}" HorizontalAlignment="Left" Source="Icons/add_drugs.png" PreviewMouseLeftButtonDown="Admin_analogs_PreviewMouseLeftButtonDown"/>
+        </Grid>
+        <Label Panel.ZIndex="7" HorizontalAlignment="Right" Width="150" Height="50" Margin="0,7,165,0" Name="label1" VerticalAlignment="Top"  FontSize="30" FontFamily="Segoe UI Light" />
+        <ContentPresenter x:Name="MainContent" Grid.Column="0"/>
+    </Grid>
+</Window>

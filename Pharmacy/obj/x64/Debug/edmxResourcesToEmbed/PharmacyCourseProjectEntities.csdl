@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PharmacyCourseProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Analogs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DrugName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AnalogName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Medications" Relationship="Self.FK_Analogs_Medications1" FromRole="Analogs" ToRole="Medications" />
+  </EntityType>
+  <EntityType Name="Discount">
+    <Key>
+      <PropertyRef Name="DrugId" />
+    </Key>
+    <Property Name="DrugId" Type="Int32" Nullable="false" />
+    <Property Name="Discount1" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Drugs" Relationship="Self.FK_Discount_Drugs" FromRole="Discount" ToRole="Drugs" />
+  </EntityType>
+  <EntityType Name="Drugs">
+    <Key>
+      <PropertyRef Name="DrugID" />
+    </Key>
+    <Property Name="DrugID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ManufactureDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DisposeDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Cost" Type="Double" Nullable="false" />
+    <Property Name="ProducerId" Type="Int32" Nullable="false" />
+    <Property Name="Count" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Discount" Relationship="Self.FK_Discount_Drugs" FromRole="Drugs" ToRole="Discount" />
+    <NavigationProperty Name="Medications" Relationship="Self.FK_Drugs_Medications" FromRole="Drugs" ToRole="Medications" />
+    <NavigationProperty Name="Producers" Relationship="Self.FK_Drugs_Producers" FromRole="Drugs" ToRole="Producers" />
+  </EntityType>
+  <EntityType Name="Medications">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PharmachologicEffect" Type="String" MaxLength="3000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IndicationsForUse" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ModeOfApplication" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SideEffects" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Contraindications" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Pregnancy" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DrugInteractions" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Overdose" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Composition" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PharmacologicalGroup" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ActiveSubstance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LeaveConditions" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IssueForm" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StorageConditions" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Analogs" Relationship="Self.FK_Analogs_Medications1" FromRole="Medications" ToRole="Analogs" />
+    <NavigationProperty Name="Drugs" Relationship="Self.FK_Drugs_Medications" FromRole="Medications" ToRole="Drugs" />
+    <NavigationProperty Name="PharmacologicalGroup1" Relationship="Self.FK_Medications_PharmacologicalGroup" FromRole="Medications" ToRole="PharmacologicalGroup" />
+  </EntityType>
+  <EntityType Name="PharmacologicalGroup">
+    <Key>
+      <PropertyRef Name="PharmacologicalGroup1" />
+    </Key>
+    <Property Name="PharmacologicalGroup1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Medications" Relationship="Self.FK_Medications_PharmacologicalGroup" FromRole="PharmacologicalGroup" ToRole="Medications" />
+  </EntityType>
+  <EntityType Name="Producers">
+    <Key>
+      <PropertyRef Name="ProducerID" />
+    </Key>
+    <Property Name="ProducerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirmName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="County" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Drugs" Relationship="Self.FK_Drugs_Producers" FromRole="Producers" ToRole="Drugs" />
+  </EntityType>
+  <Association Name="FK_Analogs_Medications1">
+    <End Role="Medications" Type="Self.Medications" Multiplicity="1" />
+    <End Role="Analogs" Type="Self.Analogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medications">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Analogs">
+        <PropertyRef Name="DrugName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Discount_Drugs">
+    <End Role="Drugs" Type="Self.Drugs" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Discount" Type="Self.Discount" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Drugs">
+        <PropertyRef Name="DrugID" />
+      </Principal>
+      <Dependent Role="Discount">
+        <PropertyRef Name="DrugId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Drugs_Medications">
+    <End Role="Medications" Type="Self.Medications" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Drugs" Type="Self.Drugs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medications">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Drugs">
+        <PropertyRef Name="Name" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Drugs_Producers">
+    <End Role="Producers" Type="Self.Producers" Multiplicity="1" />
+    <End Role="Drugs" Type="Self.Drugs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producers">
+        <PropertyRef Name="ProducerID" />
+      </Principal>
+      <Dependent Role="Drugs">
+        <PropertyRef Name="ProducerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Medications_PharmacologicalGroup">
+    <End Role="PharmacologicalGroup" Type="Self.PharmacologicalGroup" Multiplicity="1" />
+    <End Role="Medications" Type="Self.Medications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PharmacologicalGroup">
+        <PropertyRef Name="PharmacologicalGroup1" />
+      </Principal>
+      <Dependent Role="Medications">
+        <PropertyRef Name="PharmacologicalGroup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PharmacyCourseProjectEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Analogs" EntityType="Self.Analogs" />
+    <EntitySet Name="Discount" EntityType="Self.Discount" />
+    <EntitySet Name="Drugs" EntityType="Self.Drugs" />
+    <EntitySet Name="Medications" EntityType="Self.Medications" />
+    <EntitySet Name="PharmacologicalGroup" EntityType="Self.PharmacologicalGroup" />
+    <EntitySet Name="Producers" EntityType="Self.Producers" />
+    <AssociationSet Name="FK_Analogs_Medications1" Association="Self.FK_Analogs_Medications1">
+      <End Role="Medications" EntitySet="Medications" />
+      <End Role="Analogs" EntitySet="Analogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Discount_Drugs" Association="Self.FK_Discount_Drugs">
+      <End Role="Drugs" EntitySet="Drugs" />
+      <End Role="Discount" EntitySet="Discount" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Drugs_Medications" Association="Self.FK_Drugs_Medications">
+      <End Role="Medications" EntitySet="Medications" />
+      <End Role="Drugs" EntitySet="Drugs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Drugs_Producers" Association="Self.FK_Drugs_Producers">
+      <End Role="Producers" EntitySet="Producers" />
+      <End Role="Drugs" EntitySet="Drugs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Medications_PharmacologicalGroup" Association="Self.FK_Medications_PharmacologicalGroup">
+      <End Role="PharmacologicalGroup" EntitySet="PharmacologicalGroup" />
+      <End Role="Medications" EntitySet="Medications" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

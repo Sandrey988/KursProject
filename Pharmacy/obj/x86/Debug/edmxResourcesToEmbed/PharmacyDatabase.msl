@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище PharmacyCourseProjectModelContainer" CdmEntityContainer="PharmacyDatabase">
+    <EntitySetMapping Name="Analogs">
+      <EntityTypeMapping TypeName="PharmacyCourseProjectModel.Analogs">
+        <MappingFragment StoreEntitySet="Analogs">
+          <ScalarProperty Name="DrugName" ColumnName="DrugName" />
+          <ScalarProperty Name="AnalogName" ColumnName="AnalogName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Discount">
+      <EntityTypeMapping TypeName="PharmacyCourseProjectModel.Discount">
+        <MappingFragment StoreEntitySet="Discount">
+          <ScalarProperty Name="DrugId" ColumnName="DrugId" />
+          <ScalarProperty Name="Discount1" ColumnName="Discount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Drugs">
+      <EntityTypeMapping TypeName="PharmacyCourseProjectModel.Drugs">
+        <MappingFragment StoreEntitySet="Drugs">
+          <ScalarProperty Name="DrugID" ColumnName="DrugID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
+          <ScalarProperty Name="DisposeDate" ColumnName="DisposeDate" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="ProducerId" ColumnName="ProducerId" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Medications">
+      <EntityTypeMapping TypeName="PharmacyCourseProjectModel.Medications">
+        <MappingFragment StoreEntitySet="Medications">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PharmachologicEffect" ColumnName="PharmachologicEffect" />
+          <ScalarProperty Name="IndicationsForUse" ColumnName="IndicationsForUse" />
+          <ScalarProperty Name="ModeOfApplication" ColumnName="ModeOfApplication" />
+          <ScalarProperty Name="SideEffects" ColumnName="SideEffects" />
+          <ScalarProperty Name="Contraindications" ColumnName="Contraindications" />
+          <ScalarProperty Name="Pregnancy" ColumnName="Pregnancy" />
+          <ScalarProperty Name="DrugInteractions" ColumnName="DrugInteractions" />
+          <ScalarProperty Name="Overdose" ColumnName="Overdose" />
+          <ScalarProperty Name="Composition" ColumnName="Composition" />
+          <ScalarProperty Name="PharmacologicalGroup" ColumnName="PharmacologicalGroup" />
+          <ScalarProperty Name="ActiveSubstance" ColumnName="ActiveSubstance" />
+          <ScalarProperty Name="LeaveConditions" ColumnName="LeaveConditions" />
+          <ScalarProperty Name="IssueForm" ColumnName="IssueForm" />
+          <ScalarProperty Name="StorageConditions" ColumnName="StorageConditions" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PharmacologicalGroup">
+      <EntityTypeMapping TypeName="PharmacyCourseProjectModel.PharmacologicalGroup">
+        <MappingFragment StoreEntitySet="PharmacologicalGroup">
+          <ScalarProperty Name="PharmacologicalGroup1" ColumnName="PharmacologicalGroup" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Producers">
+      <EntityTypeMapping TypeName="PharmacyCourseProjectModel.Producers">
+        <MappingFragment StoreEntitySet="Producers">
+          <ScalarProperty Name="ProducerID" ColumnName="ProducerID" />
+          <ScalarProperty Name="FirmName" ColumnName="FirmName" />
+          <ScalarProperty Name="County" ColumnName="County" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

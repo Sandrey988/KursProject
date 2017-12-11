@@ -15,10 +15,10 @@ insert into Medications values (@Name, @PharmachologicEffect, @IndicationsForUse
 end
 go
 
-exec AddMedications @Name = 'Преднезалон', @PharmachologicEffect = 'Каеф', @IndicationsForUse = 'Головная боль', @ModeOfApplication = 'Внутрь',
+exec AddMedications @Name = 'Илья', @PharmachologicEffect = 'Каеф', @IndicationsForUse = 'Головная боль', @ModeOfApplication = 'Внутрь',
 					@SideEffects = 'Зуд', @Contraindications = 'Беременность', @Pregnancy = 'Не рекомендуется при беременности',
 					@DrugInteractions = 'Не применимо с мазью вишневского', @Overdose = 'Боль в желудке', @Composition = 'Мел',
-					@PharmacologicalGroup = 'Вегетотропные средства', @ActiveSubstance = 'Хрен', @LeaveConditions= 'По рецепту',
+					@PharmacologicalGroup = 'Метаболики', @ActiveSubstance = 'Хрен', @LeaveConditions= 'По рецепту',
 					@IssueForm = 'Таблетки', @StorageConditions = 'В сухом месте'
 
 
@@ -27,33 +27,42 @@ exec AddMedications @Name = 'Преднезалон', @PharmachologicEffect = 'Каеф', @Indi
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
 -- добавление аналога -- после добавления препарата
-create procedure AddAnalogs(@DrugName nvarchar(50), @AnalogName nvarchar(50), @PharmacologicalGroup nvarchar(100))
+create procedure AddAnalogs(@DrugName nvarchar(50), @AnalogName nvarchar(50))
 as begin
 declare @Name nvarchar(50)
-declare @AlanogNamed nvarchar(50)
+declare @AnalogNamed nvarchar(50)
 declare @PharmaGroup nvarchar(50)
+declare @Id int
 set @Name =			(	
-					select Name 
+					select PharmacologicalGroup 
 					from Medications 
 					where Name = @DrugName 
 					)
 
-set @AnalogName =  (	
-					select Name
+set @AnalogNamed =  (	
+				    select PharmacologicalGroup
 					from Medications
 					where Name = @AnalogName
 				   )
-select 
 
+
+	set @Id = ( select Analogs.Id from Analogs where	(Analogs.AnalogName = @DrugName and Analogs.DrugName = @AnalogName) or
+														(Analogs.AnalogName = @AnalogName and Analogs.DrugName = @DrugName))
+
+	if (@Name = @AnalogNamed) and (@DrugName <> @AnalogName) and @Id is null
+		begin
+			insert into Analogs values(@DrugName, @AnalogName)
+		end
 end
 go
 
+exec AddAnalogs @DrugName = 'Пашка', @AnalogName = 'Пашка'
+
+delete Analogs;
+drop procedure AddAnalogs
 select * from Medications
-
-declare @PharmacologicalGroup nvarchar(50) = 'Интермедианты';
-select	t1.PharmacologicalGroup 
-		from Medications t1 join Medications t2 on (t1.PharmacologicalGroup = @PharmacologicalGroup and t2.PharmacologicalGroup = @PharmacologicalGroup)
-
+select * from Analogs
+select * from PharmacologicalGroup
 
 
 
@@ -77,14 +86,20 @@ go
 create procedure AddDiscount(@DrugId int, @Discount int)
 as begin
 
-if @Discount >=0 and @DrugId
+declare @DrugIq int;
+
+set @DrugIq = (select Drugs.DrugID from Drugs where Drugs.DrugID = @DrugId)
+
+if @Discount >=0 and @DrugId is not null
 
 insert into Discount values(@DrugId, @Discount)
 end
 go
 
---exec AddDiscount @DrugId = '', @Discount = ''
+drop procedure AddDiscount
 
+exec AddDiscount @DrugId = '45', @Discount = '50'
+select * from Discount
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -100,17 +115,41 @@ go
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- добавление препарата -- после добавления аннотации
-create procedure AddDrug (@Name nvarchar(50), @ManufactureDate date, @DisposeDate date, @Cost float, @ProducerId int, @Count int)
+create procedure AddDrug (@Name nvarchar(50), @ManufactureDate date, @DisposeDate date, @Cost float, @Count int, @FirmName nvarchar(50))
 as begin
 
-if @ManufactureDate < @DisposeDate and @Cost > 0  and @Count >= 0 and @ProducerId= @ProducerI
+declare @Producer int
+declare @Nick nvarchar(50) 
+declare @Id int;
+
+set @Nick =		( select Medications.Name from Medications where Medications.Name = @Name );
+set @Producer = ( select Producers.ProducerID from Producers where Producers.FirmName = @FirmName );
+set @Id =		( select Drugs.DrugID from Drugs where Drugs.Name = @Name and Drugs.ManufactureDate = @ManufactureDate and Drugs.DisposeDate = @DisposeDate and Drugs.Cost = @Cost and Drugs.ProducerId = @Producer)
+
+-- добавление препаратов одной партии
+if @Id is not null
+	begin
+		update Drugs set Drugs.Count = Drugs.Count + @Count where Drugs.DrugID = @Id
+	end
+	else
+	begin
 
 
-insert into Drugs values()
+if @Producer <> 0 and @Nick is  not null
+	begin
+		print 'Hello'
+		if @ManufactureDate < @DisposeDate and @Cost > 0  and @Count >= 0 
+			insert into Drugs values(@Name, @ManufactureDate, @DisposeDate, @Cost, @Producer,  @Count)
+	end
+
+	end
 end
 go
 
-
-
+exec AddDrug @Name = 'Илья', @ManufactureDate = '10-10-2017', @DisposeDate = '20-10-2019', @Cost = '150', @Count = '100', @FirmName = 'Фармак'
+drop procedure AddDrug
+select * from Drugs
+delete Drugs;
+select * from Medications
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

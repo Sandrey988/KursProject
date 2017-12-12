@@ -15,10 +15,10 @@ insert into Medications values (@Name, @PharmachologicEffect, @IndicationsForUse
 end
 go
 
-exec AddMedications @Name = 'Илья', @PharmachologicEffect = 'Каеф', @IndicationsForUse = 'Головная боль', @ModeOfApplication = 'Внутрь',
+exec AddMedications @Name = 'Сергей', @PharmachologicEffect = 'Каеф', @IndicationsForUse = 'Головная боль', @ModeOfApplication = 'Внутрь',
 					@SideEffects = 'Зуд', @Contraindications = 'Беременность', @Pregnancy = 'Не рекомендуется при беременности',
 					@DrugInteractions = 'Не применимо с мазью вишневского', @Overdose = 'Боль в желудке', @Composition = 'Мел',
-					@PharmacologicalGroup = 'Метаболики', @ActiveSubstance = 'Хрен', @LeaveConditions= 'По рецепту',
+					@PharmacologicalGroup = 'Метаболики', @ActiveSubstance = 'Макароны', @LeaveConditions= 'По рецепту',
 					@IssueForm = 'Таблетки', @StorageConditions = 'В сухом месте'
 
 
@@ -56,7 +56,7 @@ set @AnalogNamed =  (
 end
 go
 
-exec AddAnalogs @DrugName = 'Пашка', @AnalogName = 'Пашка'
+exec AddAnalogs @DrugName = 'Сергей', @AnalogName = 'Андрей'
 
 delete Analogs;
 drop procedure AddAnalogs
@@ -119,22 +119,23 @@ create procedure AddDrug (@Name nvarchar(50), @ManufactureDate date, @DisposeDat
 as begin
 
 declare @Producer int
-declare @Nick nvarchar(50) 
-declare @Id int;
+declare @Nick     nvarchar(50) 
+declare @Id       int;
 
-set @Nick =		( select Medications.Name from Medications where Medications.Name = @Name );
+set @Nick     =	( select Medications.Name from Medications where Medications.Name = @Name );
 set @Producer = ( select Producers.ProducerID from Producers where Producers.FirmName = @FirmName );
-set @Id =		( select Drugs.DrugID from Drugs where Drugs.Name = @Name and Drugs.ManufactureDate = @ManufactureDate and Drugs.DisposeDate = @DisposeDate and Drugs.Cost = @Cost and Drugs.ProducerId = @Producer)
+set @Id       =	( select Drugs.DrugID from Drugs where Drugs.Name = @Name and Drugs.ManufactureDate = @ManufactureDate and Drugs.DisposeDate = @DisposeDate and Drugs.Cost = @Cost and Drugs.ProducerId = @Producer)
 
 -- добавление препаратов одной партии
 if @Id is not null
 	begin
-		update Drugs set Drugs.Count = Drugs.Count + @Count where Drugs.DrugID = @Id
+		if @Cost = ( select Drugs.Cost from Drugs where Drugs.DrugID = @Id)
+			update Drugs set Drugs.Count = Drugs.Count + @Count where Drugs.DrugID = @Id		
 	end
+
 	else
+
 	begin
-
-
 if @Producer <> 0 and @Nick is  not null
 	begin
 		print 'Hello'
@@ -146,7 +147,7 @@ if @Producer <> 0 and @Nick is  not null
 end
 go
 
-exec AddDrug @Name = 'Илья', @ManufactureDate = '10-10-2017', @DisposeDate = '20-10-2019', @Cost = '150', @Count = '100', @FirmName = 'Фармак'
+exec AddDrug @Name = 'Андрей', @ManufactureDate = '10-10-2017', @DisposeDate = '20-10-2019', @Cost = '400', @Count = '100', @FirmName = 'БелМедПрепараты'
 drop procedure AddDrug
 select * from Drugs
 delete Drugs;

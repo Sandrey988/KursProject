@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -286,11 +287,9 @@ namespace PharmacyCourseProject.ViewModel
             switch (SelectedString)
             {
                 case "Название":
-
-                    SearchListResult = new ObservableCollection<Drugs>((from drug in database.Drugs
-                                                                        where drug.Medications.Name.Contains(StringQuery)
-                                                                        select drug));          
-
+                        SearchListResult = new ObservableCollection<Drugs>((from drug in database.Drugs
+                                                                            where drug.Medications.Name.Contains(StringQuery)
+                                                                            select drug));          
                         break;
 
                     case "Фирма-производитель":

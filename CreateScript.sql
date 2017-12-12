@@ -98,7 +98,7 @@ go
 
 drop procedure AddDiscount
 
-exec AddDiscount @DrugId = '45', @Discount = '50'
+exec AddDiscount @DrugId = '46', @Discount = '50'
 select * from Discount
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -147,10 +147,10 @@ if @Producer <> 0 and @Nick is  not null
 end
 go
 
-exec AddDrug @Name = 'Андрей', @ManufactureDate = '10-10-2017', @DisposeDate = '20-10-2019', @Cost = '400', @Count = '100', @FirmName = 'БелМедПрепараты'
+exec AddDrug @Name = 'Сергей', @ManufactureDate = '10-10-2017', @DisposeDate = '20-10-2019', @Cost = '400', @Count = '100', @FirmName = 'БелМедПрепараты'
 drop procedure AddDrug
 select * from Drugs
-delete Drugs;
+delete Drugs
 select * from Medications
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+select * from History

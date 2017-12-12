@@ -80,7 +80,7 @@ create procedure SelectName(@Name nvarchar(50))
 		select * from Drugs where Drugs.Name = @Name
 	end
 
-exec SelectName @Name = 'Илья'
+exec SelectName @Name = 'Андрей'
 
 drop procedure SelectName
 

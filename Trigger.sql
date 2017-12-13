@@ -25,14 +25,18 @@ From deleted
 drop trigger Drugs_Delete
 
 ------------------------------------------------------------------
---TODO Update Tridder
 
+create trigger Drugs_Update
+on Drugs
+after update
+as
+insert into History(ProductId, Operation)
+select DrugID, 'Изменен препарат ' + Name
+From inserted
 
+drop trigger Drugs_Update
 
+-------------------------------------------------------------------
 
-
-
-
-
-
-
+select * from Drugs
+select * from Discount

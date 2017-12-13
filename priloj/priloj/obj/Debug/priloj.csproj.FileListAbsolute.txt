@@ -1,0 +1,11 @@
+D:\study\priloj\priloj\bin\Debug\priloj.exe.config
+D:\study\priloj\priloj\bin\Debug\priloj.exe
+D:\study\priloj\priloj\bin\Debug\priloj.pdb
+D:\study\priloj\priloj\obj\Debug\priloj.exe
+D:\study\priloj\priloj\obj\Debug\priloj.pdb
+D:\Pharmacy\priloj\priloj\bin\Debug\priloj.exe.config
+D:\Pharmacy\priloj\priloj\obj\Debug\priloj.exe
+D:\Pharmacy\priloj\priloj\obj\Debug\priloj.pdb
+D:\Pharmacy\priloj\priloj\bin\Debug\priloj.exe
+D:\Pharmacy\priloj\priloj\bin\Debug\priloj.pdb
+D:\Pharmacy\priloj\priloj\obj\Debug\priloj.csprojResolveAssemblyReference.cache

@@ -36,3 +36,17 @@ exec DeleteDrugs @Id = '75'
 drop procedure DeleteDrugs
 
 ----------------------------------------------------------------------------------------
+
+create procedure DeleteProducer(@ProdName nvarchar(50))
+as begin
+	if(select Producers.FirmName from Producers where Producers.FirmName = @ProdName) is not null
+		delete Producers where Producers.FirmName = @ProdName
+	end
+
+exec DeleteProducer @ProdName = 'Teva'
+
+select * from Producers
+
+drop procedure DeleteProducer
+
+----------------------------------------------------------------------------------------

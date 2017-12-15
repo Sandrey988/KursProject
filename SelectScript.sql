@@ -34,6 +34,7 @@ create procedure SelectAllDrugs
 
 exec SelectAllDrugs
 
+
 drop procedure SelectAllDrugs
 --------------------------------------------------
 -- Medications
@@ -54,6 +55,7 @@ create procedure SelectAllProducers
 	end
 
 exec SelectAllProducers
+
 
 drop procedure SelectAllProducers
 

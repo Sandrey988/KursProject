@@ -25,7 +25,7 @@ namespace priloj
                 xmldoc.Root.Add(new XElement("Order", new XElement("Country_Names",Name), new XElement("Firm_Names", FirmName)));
             }
 
-            xmldoc.Save("competitors.xml");
+            xmldoc.Save("comp.xml");
         }
     }
 }

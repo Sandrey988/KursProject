@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pharmacydatabase.context.tt")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pharmacydatabase.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pharmacycourseprojectentities.context.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pharmacycourseprojectentities.tt")]
 
 

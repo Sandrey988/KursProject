@@ -58,3 +58,4 @@ D:\Pharmacy\Pharmacy\obj\x86\Debug\Views\SearchView.baml
 D:\Pharmacy\Pharmacy\obj\x86\Debug\Pharmacy.g.resources
 D:\Pharmacy\Pharmacy\obj\x86\Debug\Pharmacy.Properties.Resources.resources
 D:\Pharmacy\Pharmacy\obj\x86\Debug\Pharmacy.csproj.GenerateResource.Cache
+D:\Pharmacy\Pharmacy\obj\x86\Debug\Pharmacy.csprojResolveAssemblyReference.cache

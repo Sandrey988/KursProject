@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище PharmacyCourseProjectModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Analogs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DrugName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AnalogName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Discount">
+    <Key>
+      <PropertyRef Name="DrugId" />
+    </Key>
+    <Property Name="DrugId" Type="int" Nullable="false" />
+    <Property Name="Discount" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Drugs">
+    <Key>
+      <PropertyRef Name="DrugID" />
+    </Key>
+    <Property Name="DrugID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ManufactureDate" Type="date" Nullable="false" />
+    <Property Name="DisposeDate" Type="date" Nullable="false" />
+    <Property Name="Cost" Type="float" Nullable="false" />
+    <Property Name="ProducerId" Type="int" Nullable="false" />
+    <Property Name="Count" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Medications">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PharmachologicEffect" Type="nvarchar" MaxLength="3000" Nullable="false" />
+    <Property Name="IndicationsForUse" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="ModeOfApplication" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="SideEffects" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="Contraindications" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="Pregnancy" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="DrugInteractions" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="Overdose" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="Composition" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="PharmacologicalGroup" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="ActiveSubstance" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LeaveConditions" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="IssueForm" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="StorageConditions" Type="nvarchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PharmacologicalGroup">
+    <Key>
+      <PropertyRef Name="PharmacologicalGroup" />
+    </Key>
+    <Property Name="PharmacologicalGroup" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Producers">
+    <Key>
+      <PropertyRef Name="ProducerID" />
+    </Key>
+    <Property Name="ProducerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirmName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="County" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Analogs_Medications1">
+    <End Role="Medications" Type="Self.Medications" Multiplicity="1" />
+    <End Role="Analogs" Type="Self.Analogs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medications">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Analogs">
+        <PropertyRef Name="DrugName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Discount_Drugs">
+    <End Role="Drugs" Type="Self.Drugs" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Discount" Type="Self.Discount" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Drugs">
+        <PropertyRef Name="DrugID" />
+      </Principal>
+      <Dependent Role="Discount">
+        <PropertyRef Name="DrugId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Drugs_Medications">
+    <End Role="Medications" Type="Self.Medications" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Drugs" Type="Self.Drugs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medications">
+        <PropertyRef Name="Name" />
+      </Principal>
+      <Dependent Role="Drugs">
+        <PropertyRef Name="Name" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Drugs_Producers">
+    <End Role="Producers" Type="Self.Producers" Multiplicity="1" />
+    <End Role="Drugs" Type="Self.Drugs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producers">
+        <PropertyRef Name="ProducerID" />
+      </Principal>
+      <Dependent Role="Drugs">
+        <PropertyRef Name="ProducerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Medications_PharmacologicalGroup">
+    <End Role="PharmacologicalGroup" Type="Self.PharmacologicalGroup" Multiplicity="1" />
+    <End Role="Medications" Type="Self.Medications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PharmacologicalGroup">
+        <PropertyRef Name="PharmacologicalGroup" />
+      </Principal>
+      <Dependent Role="Medications">
+        <PropertyRef Name="PharmacologicalGroup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище PharmacyCourseProjectModelContainer">
+    <EntitySet Name="Analogs" EntityType="Self.Analogs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Discount" EntityType="Self.Discount" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Drugs" EntityType="Self.Drugs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Medications" EntityType="Self.Medications" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PharmacologicalGroup" EntityType="Self.PharmacologicalGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Producers" EntityType="Self.Producers" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Analogs_Medications1" Association="Self.FK_Analogs_Medications1">
+      <End Role="Medications" EntitySet="Medications" />
+      <End Role="Analogs" EntitySet="Analogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Discount_Drugs" Association="Self.FK_Discount_Drugs">
+      <End Role="Drugs" EntitySet="Drugs" />
+      <End Role="Discount" EntitySet="Discount" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Drugs_Medications" Association="Self.FK_Drugs_Medications">
+      <End Role="Medications" EntitySet="Medications" />
+      <End Role="Drugs" EntitySet="Drugs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Drugs_Producers" Association="Self.FK_Drugs_Producers">
+      <End Role="Producers" EntitySet="Producers" />
+      <End Role="Drugs" EntitySet="Drugs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Medications_PharmacologicalGroup" Association="Self.FK_Medications_PharmacologicalGroup">
+      <End Role="PharmacologicalGroup" EntitySet="PharmacologicalGroup" />
+      <End Role="Medications" EntitySet="Medications" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

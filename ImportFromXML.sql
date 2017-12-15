@@ -1,54 +1,46 @@
 ﻿use PharmacyCourseProject;
 
 ---------------------------------------------------------------------------------------------------------
+exec  SP_HELPINDEX 'Producers'
 
-CREATE PROC insertCountryFromXML 
-	@path nvarchar(256)
+CREATE PROC insertProcuderFromXML 
+@path nvarchar(256) 
 AS 
-begin
-	SET NOCOUNT ON  
-	SET XACT_ABORT ON  
+begin 
+SET NOCOUNT ON 
+SET XACT_ABORT ON 
 
-	declare @count1 int=0;
-	declare @count2 int=0;
-	set @count1 = (select count(*) from Producers)
-		
-	BEGIN TRAN
+BEGIN TRAN 
 
-	declare @results table (x xml)			
-	declare @sql nvarchar(300)=
-               'SELECT 
-		CAST(REPLACE(CAST(x AS VARCHAR(MAX)), ''encoding="utf-16"'', ''encoding="utf-8"'') AS XML)
-		FROM OPENROWSET(BULK '''+@path+''', SINGLE_BLOB) AS T(x)'; 
- 
-	INSERT INTO @results EXEC (@sql) 
+declare @results table (x xml) 
+declare @sql nvarchar(300)= 
+'SELECT 
+CAST(REPLACE(CAST(x AS VARCHAR(MAX)), ''encoding="utf-16"'', ''encoding="utf-8"'') AS XML) 
+FROM OPENROWSET(BULK '''+@path+''', SINGLE_BLOB) AS T(x)'; 
 
-	declare @xml XML = (SELECT  TOP 1 x from  @results);
+INSERT INTO @results EXEC (@sql) 
 
-	declare @ad nvarchar(50);
-	set @ad = 
-	(	SELECT 
-		C3.value('Country_Names[1]', 'NVARCHAR(100)') AS [Country]
-		FROM @xml.nodes('Root/Order') AS T3(C3) );
+declare @xml XML = (SELECT TOP 1 x from @results); 
 
-		if @ad is null
-		begin
-	INSERT INTO [Producers]([FirmName]) 
-		SELECT 
-		C3.value('Country_Names[1]', 'NVARCHAR(100)') AS [Country]
-		FROM @xml.nodes('Root/Order') AS T3(C3) 
-	end;
-	COMMIT;
-	set @count2 = (select count(*) from Producers)
-	return @count2 - @count1;
-end;
+INSERT INTO Producers(FirmName, County) 
+SELECT 
+C3.value('Firm_Names[1]', 'NVARCHAR(50)') AS FirmName, 
+C3.value('Country_Names[1]', 'NVARCHAR(50)') AS County 
+FROM @xml.nodes('Root/Order') AS T3(C3) 
+
+COMMIT; 
+end; 
 GO
 
+exec insertProcuderFromXML 'D:\Pharmacy\comp.xml'
 
-exec insertCountryFromXML 'D:\Pharmacy\producer.xml'
-
-select * from Producers
-
-drop procedure insertCountryFromXML
+select Producers.FirmName from Producers
+delete Producers
+drop procedure insertProcuderFromXML
 
 -----------------------------------------------------------------------------------------------------------------------------------
+--план запроса
+--todo index
+
+CREATE index #EX_TKEY on Producers(FirmName) 
+drop index #EX_TKEY on Producers

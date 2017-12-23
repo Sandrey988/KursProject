@@ -1,0 +1,1 @@
+sqlcmd -S DESKTOP-PO557BB -E -i backup.sql

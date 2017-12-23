@@ -76,7 +76,7 @@ end
 go
 
 
---exec AddProducers @FirmName = '‘арма√руп»нк', @Country = '—Ўј'
+exec AddProducers @FirmName = 'Ѕелћедѕрепараты', @Country = 'Ѕеларусь'
 
 
 

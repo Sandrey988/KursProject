@@ -40,3 +40,4 @@ drop trigger Drugs_Update
 
 select * from Drugs
 select * from Discount
+select * from History
